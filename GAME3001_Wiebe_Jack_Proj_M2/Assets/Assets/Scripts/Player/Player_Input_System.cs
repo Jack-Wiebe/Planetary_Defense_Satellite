@@ -20,6 +20,10 @@ public class Player_Input_System : MonoBehaviour {
 		float rotation = Input.GetAxis ("Horizontal");
 		float fire = Input.GetAxis ("Jump");
 
+		if (Input.GetButtonDown ("Switch")) {
+			m_Weapon.Change_Type (P_TYPE.MISSILE);
+		}
+
 		m_Player.Move (-rotation);
 
 		if (fire > 0 && !m_shooting) {

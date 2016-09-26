@@ -4,7 +4,7 @@ using System.Collections;
 public enum P_TYPE
 {
 	BULLET,
-	BEAM,
+	LAZER,
 	MISSILE
 }
 
@@ -14,10 +14,14 @@ abstract public class Projectile : MonoBehaviour {
 	[SerializeField] protected float m_bulletSpeed;
 	[SerializeField] protected float m_bulletLife;
 	[SerializeField] protected GameObject m_player;
-	[SerializeField] protected float m_dmg = 1.0f;
+	[SerializeField] protected int m_dmg = 1;
 	[SerializeField] protected float m_spread;
 	//[SerializeField] protected float m_rate;
-	[SerializeField] protected P_TYPE m_type; 
+	[SerializeField] protected P_TYPE m_type;
+	protected Projectile b_projectile;
+	protected Projectile l_projectile;
+	protected Projectile m_projectile;
+
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +29,9 @@ abstract public class Projectile : MonoBehaviour {
 	}
 
 	protected virtual void Awake(){
+		b_projectile = GetComponent<Bullet> ();
+		l_projectile = GetComponent<Lazer> ();
+		m_projectile = GetComponent<Missile> ();
 		m_player = GameObject.FindGameObjectWithTag ("Player");
 	}
 
@@ -61,12 +68,12 @@ abstract public class Projectile : MonoBehaviour {
 		StopAllCoroutines ();
 	}
 
-	public virtual void Change_Speed(int speed)
+	public virtual void Change_Speed(float speed)
 	{
 		m_bulletSpeed = speed;
 	}
 
-	public virtual void Change_Spread(int spread)
+	public virtual void Change_Spread(float spread)
 	{
 		m_spread = spread;
 	}
@@ -81,9 +88,34 @@ abstract public class Projectile : MonoBehaviour {
 		m_dmg = dmg;
 	}
 
-	public virtual void Change_Type(P_TYPE type)
+	public virtual Projectile Change_Type(P_TYPE type)
 	{
-		m_type = type;
+		l_projectile.m_type = type;
+		m_projectile.m_type = type;
+		b_projectile.m_type = type;
+
+		switch (type) {
+		case P_TYPE.LAZER:
+			l_projectile.enabled = true;
+			m_projectile.enabled = false;
+			b_projectile.enabled = false;
+			return l_projectile;
+
+		case P_TYPE.MISSILE:
+			l_projectile.enabled = false;
+			m_projectile.enabled = true;
+			b_projectile.enabled = false;
+			return m_projectile;
+		
+		case P_TYPE.BULLET:
+			l_projectile.enabled = false;
+			m_projectile.enabled = false;
+			b_projectile.enabled = true;
+			return b_projectile;
+
+		default:
+			return null;
+		}
 	}
 
 	public virtual void Bullet_Hit (GameObject instigator, GameObject target, float dmg)

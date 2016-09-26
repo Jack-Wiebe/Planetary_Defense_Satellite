@@ -73,7 +73,7 @@ public class Player_Shooting_System : MonoBehaviour {
 	public void Change_Type(P_TYPE type)
 	{
 		for (int i = 0; i < m_bulletPoolNum; i++) {
-			Projectiles [i].Change_Type (type);
+			Projectiles [i] = Projectiles [i].Change_Type (type);
 		}
 	}
 
