@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Basic_Enemy_AI : MonoBehaviour {
 
+	[SerializeField]private float m_enemyHealth = 100.0f;
+
 	public GameObject target;
 	[SerializeField]private float m_moveSpeed;
 	[SerializeField]private float m_rotSpeed;
@@ -33,4 +35,25 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		}
 			
 	}
+
+	public void ChangeHealth(float dmg)
+	{
+		m_enemyHealth -= dmg;
+		if (m_enemyHealth <= 0)
+			DestroyEnemeny ();
+	}
+
+	public void DestroyEnemeny ()
+	{
+		//
+		//modidy score
+		//
+		//drop item
+		//
+		//spawn explosiong[ojectpool]
+		//
+		Destroy(this.gameObject);
+	}
+
+
 }

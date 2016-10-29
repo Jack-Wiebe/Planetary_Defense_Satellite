@@ -21,7 +21,20 @@ public class Player_Input_System : MonoBehaviour {
 		float fire = Input.GetAxis ("Jump");
 
 		if (Input.GetButtonDown ("Switch")) {
-			m_Weapon.Change_Type (P_TYPE.MISSILE);
+			Debug.Log (m_Weapon.Get_P_Type ());
+			switch (m_Weapon.Get_P_Type()) {
+			case (P_TYPE.LAZER):
+				m_Weapon.Change_P_Type (P_TYPE.MISSILE);
+				break;
+			case(P_TYPE.MISSILE):
+				m_Weapon.Change_P_Type (P_TYPE.BULLET);
+				break;
+			case(P_TYPE.BULLET):
+				m_Weapon.Change_P_Type (P_TYPE.LAZER);
+				break;
+
+
+			}
 		}
 
 		m_Player.Move (-rotation);

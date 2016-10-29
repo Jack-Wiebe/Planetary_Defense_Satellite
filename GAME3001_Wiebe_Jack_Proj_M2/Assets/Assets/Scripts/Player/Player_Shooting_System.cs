@@ -12,6 +12,7 @@ public class Player_Shooting_System : MonoBehaviour {
 	[SerializeField] private int m_bulletPoolNum = 100;
 	[SerializeField] private List<GameObject> Bullets;
 	[SerializeField] private List<Projectile> Projectiles;
+	[SerializeField] private P_TYPE m_type;
 
 	private IEnumerator m_coroutine;
 	// Use this for initialization
@@ -28,11 +29,7 @@ public class Player_Shooting_System : MonoBehaviour {
 			Bullets.Add (obj);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
 	public void ShootOn()
 	{
 
@@ -70,14 +67,18 @@ public class Player_Shooting_System : MonoBehaviour {
 		}
 	}
 
-	public void Change_Type(P_TYPE type)
+	public void Change_P_Type(P_TYPE type)
 	{
+		m_type = type;
 		for (int i = 0; i < m_bulletPoolNum; i++) {
 			Projectiles [i] = Projectiles [i].Change_Type (type);
 		}
 	}
 
-
+	public P_TYPE Get_P_Type()
+	{
+		return m_type;
+	}
 	public IEnumerator Firing()
 	{
 
@@ -104,7 +105,7 @@ public class Player_Shooting_System : MonoBehaviour {
 				}
 			}
 
-			Debug.Log (m_fireDelay);
+			//Debug.Log (Bullets);
 
 			//Debug.Break ();
 			//yield return new WaitForSeconds (_fireDelay);
