@@ -15,7 +15,7 @@ public class Player_Input_System : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 
 		float rotation = Input.GetAxis ("Horizontal");
 		float fire = Input.GetAxis ("Jump");
