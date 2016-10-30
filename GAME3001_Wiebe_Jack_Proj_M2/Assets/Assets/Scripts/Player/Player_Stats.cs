@@ -23,7 +23,7 @@ public class Player_Stats : MonoBehaviour {
 	public int   l_dmg;
 	public float l_spread;
 
-	[SerializeField]private int m_health;
+	[SerializeField]private int m_health = 100;
 	[SerializeField]private P_TYPE m_type;
 
 
@@ -52,6 +52,19 @@ public class Player_Stats : MonoBehaviour {
 		return;
 	}
 
+	public void ChangeHealth(int dmg)
+	{
+		m_health -= dmg;
+		if (m_health <= 0)
+			EndGame ();
+		return;
+	}
+
+	public void EndGame()
+	{
+		//destroy player
+		//display ending game message 
+	}
 
 	// Use this for initialization
 	void Start () {
