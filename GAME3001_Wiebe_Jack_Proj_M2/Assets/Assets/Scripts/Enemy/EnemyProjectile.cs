@@ -9,6 +9,10 @@ public class EnemyProjectile : Projectile {
 		if (target.CompareTag("Player")) {
 			Bullet_Hit (m_player, target.gameObject, m_dmg);
 		}
+		if (target.CompareTag("Projectile")) {
+			target.gameObject.SetActive (false);
+			this.gameObject.SetActive (false);
+		}
 	}
 
 	public override void Bullet_Hit (GameObject instigator, GameObject target, float dmg)
@@ -24,6 +28,7 @@ public class EnemyProjectile : Projectile {
 			Player_Stats.instance.ChangeHealth (m_dmg);
 			this.gameObject.SetActive (false);
 		}
+
 	}
 
 }

@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player_Stats : MonoBehaviour {
 
 	public static Player_Stats instance = null;     
+
+	public int score = 0;
+	public Text scoreBoard;
+	public Text healthBoard;
 
 	public float b_speed;
 	public float b_rate;
@@ -68,12 +73,14 @@ public class Player_Stats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		scoreBoard = GameObject.Find ("Text").GetComponent<Text>();
+		healthBoard = GameObject.Find ("Health").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		scoreBoard.text = string.Concat ("Score: ", score);
+		healthBoard.text = string.Concat ("Health: ", m_health);
 	}
 		
 }

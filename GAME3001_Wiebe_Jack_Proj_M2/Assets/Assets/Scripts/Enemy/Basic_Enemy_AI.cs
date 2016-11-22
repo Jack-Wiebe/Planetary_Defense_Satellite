@@ -7,14 +7,16 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	[SerializeField]protected float m_enemyHealth = 100.0f;
 
 	public GameObject target;
-	[SerializeField]private float m_moveSpeed;
-	[SerializeField]private float m_rotSpeed;
-	[SerializeField]private float m_stopDist;
+	[SerializeField]protected float m_moveSpeed;
+	[SerializeField]protected float m_rotSpeed;
+	[SerializeField]protected float m_stopDist;
 	protected Quaternion m_destRot;
 	protected Vector3 m_targetVec;
 	protected Vector3 m_destVec;
 	protected bool m_hasTarget;
 	protected float m_magnitude;
+
+	bool isDead = false; //this is to prevent adding score multiple times
 
 	public GameObject newProj;
 	[SerializeField]protected int m_poolNum;
@@ -25,7 +27,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	[SerializeField]protected float m_fireRate;
 
 	// Use this for initialization
-	void Start () {
+	virtual protected void Start () {
 		m_targetVec = target.transform.position;
 		m_hasTarget = true;
 
@@ -40,7 +42,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	virtual protected void Update () {
 
 		LookAt ();
 		BasicMove ();
@@ -48,7 +50,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 			
 	}
 
-	protected void LookAt()
+	virtual protected void LookAt()
 	{
 		m_destVec = m_targetVec - this.transform.position;
 		m_destRot = Quaternion.LookRotation (this.transform.forward,  m_destVec );
@@ -56,7 +58,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		this.transform.rotation = Quaternion.RotateTowards (this.transform.rotation, m_destRot, m_rotSpeed);
 	}
 
-	protected void BasicMove()
+	virtual protected void BasicMove()
 	{
 		if(m_hasTarget)
 			this.transform.Translate (Vector3.up * (m_moveSpeed * Time.deltaTime));
@@ -66,7 +68,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		}
 	}
 
-	protected void FireWeapon()
+	virtual protected void FireWeapon()
 	{
 		m_count++;
 		if (m_magnitude <= m_stopDist) {
@@ -86,22 +88,23 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		}
 	}
 
-	public void ChangeHealth(float dmg)
+	virtual public void ChangeHealth(float dmg)
 	{
 		m_enemyHealth -= dmg;
-		if (m_enemyHealth <= 0)
+		if (m_enemyHealth <= 0 && !isDead)
 			DestroyEnemeny ();
 	}
 
-	public void DestroyEnemeny ()
+	virtual public void DestroyEnemeny ()
 	{
-		//
-		//modify score
-		//
+		isDead = true;
+
 		//drop item
 		//
 		//spawn explosion[ojectpool]
 		//
+
+		Player_Stats.instance.score += 10;
 		Destroy(this.gameObject);
 	}
 

@@ -76,6 +76,7 @@ abstract public class Projectile : MonoBehaviour {
 		if (target.CompareTag("Enemy")) {
 			Bullet_Hit (m_player, target.gameObject, m_dmg);
 		}
+
 	}
 		
 
