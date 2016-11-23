@@ -5,7 +5,7 @@ public class EnemyProjectile : Projectile {
 
 	public override void OnTriggerEnter2D(Collider2D target)
 	{
-		Debug.Log (target);
+		//Debug.Log (target);
 		if (target.CompareTag("Player")) {
 			Bullet_Hit (m_player, target.gameObject, m_dmg);
 		}
