@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour {
 
@@ -47,16 +48,19 @@ public class Spawner : MonoBehaviour {
 			for (int j = 0; j < (int)(basic_enemy_count * basic_enemy_multiplier); j++) {
 				temp = Instantiate (Basic_Enemy, spawnPoints [Random.Range (0, spawnPoints.Length)].transform.position, Quaternion.identity) as GameObject;
 				temp.SetActive (false);
+				temp.GetComponent<Basic_Enemy_AI> ().spawner = this;
 				spawnPool.Add (temp);
 			}
 			for (int j = 0; j < (int)(boss_enemy_count * boss_enemy_multiplier); j++) {
 				temp = Instantiate (Boss_Enemy, spawnPoints [Random.Range (0, spawnPoints.Length)].transform.position, Quaternion.identity) as GameObject;
 				temp.SetActive (false);
+				temp.GetComponent<Basic_Enemy_AI> ().spawner = this;
 				spawnPool.Add (temp);
 			}
 			for (int j = 0; j < (int)(evasive_enemy_count * evasive_enemy_multiplier); j++) {
 				temp = Instantiate (Evasive_Enemy, spawnPoints [Random.Range (0, spawnPoints.Length)].transform.position, Quaternion.identity) as GameObject;
 				temp.SetActive (false);
+				temp.GetComponent<Basic_Enemy_AI> ().spawner = this;
 				spawnPool.Add (temp);
 			}
 		}
@@ -72,11 +76,12 @@ public class Spawner : MonoBehaviour {
 			yield return new WaitForSeconds (spawn_delay);
 
 			for (int i = 0; i < spawnPool.Count; i++) {
-				if (!spawnPool [i].activeInHierarchy) {
-					spawnPool [i].SetActive (true);
-					break;
+				if (spawnPool [i] != null) {
+					if (!spawnPool [i].activeInHierarchy) {
+						spawnPool [i].SetActive (true);
+						break;
+					}
 				}
-
 			}
 				
 		}
@@ -89,6 +94,14 @@ public class Spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//Debug.Log (spawnPool.Count);
+		if (spawnPool.Count <= 0)
+			LoadNextRound ();
+	}
+
+	public void LoadNextRound()
+	{
+		Player_Stats.instance.isShopMode = true;
+		SceneManager.LoadScene ("Shop");
 	}
 }

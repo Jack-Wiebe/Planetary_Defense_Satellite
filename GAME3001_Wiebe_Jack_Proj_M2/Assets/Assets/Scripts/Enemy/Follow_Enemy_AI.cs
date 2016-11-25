@@ -23,6 +23,19 @@ public class Follow_Enemy_AI : Basic_Enemy_AI {
 		FireWeapon ();
 	}
 
+	public override void DestroyEnemeny ()
+	{
+		//spawner.spawnPool.Remove (this.gameObject);
+
+		//drop item
+		//
+		//spawn explosion[ojectpool]
+		//
+
+		Player_Stats.instance.score += 10;
+		Destroy(this.gameObject);
+	}
+
 	protected void Follow()
 	{
 		if(m_hasTarget)

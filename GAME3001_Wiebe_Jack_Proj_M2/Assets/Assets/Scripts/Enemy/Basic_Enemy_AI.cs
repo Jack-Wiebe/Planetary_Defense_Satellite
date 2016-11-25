@@ -16,6 +16,8 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	protected bool m_hasTarget;
 	protected float m_magnitude;
 
+	public Spawner spawner;
+
 	bool isDead = false; //this is to prevent adding score multiple times
 
 	public GameObject newProj;
@@ -97,7 +99,8 @@ public class Basic_Enemy_AI : MonoBehaviour {
 
 	virtual public void DestroyEnemeny ()
 	{
-		isDead = true;
+		//isDead = true;
+		spawner.spawnPool.Remove (this.gameObject);
 
 		//drop item
 		//

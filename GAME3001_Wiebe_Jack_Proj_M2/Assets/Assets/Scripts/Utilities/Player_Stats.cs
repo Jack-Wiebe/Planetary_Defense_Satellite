@@ -6,13 +6,19 @@ public class Player_Stats : MonoBehaviour {
 
 	public static Player_Stats instance = null;     
 
+	public bool isShopMode = false;
+
 	public int round;
 	public int score;
 	public Text scoreBoard;
 	public Text healthBoard;
 	public Text roundBoard;
 
-	public float b_speed;
+	public int bullet_level = 0;
+	public int lazer_level = 0;
+	public int missile_level = 0;
+
+	/*public float b_speed;
 	public float b_rate;
 	public float b_bulletLife;
 	public int   b_dmg;
@@ -28,7 +34,7 @@ public class Player_Stats : MonoBehaviour {
 	public float l_rate;
 	public float l_bulletLife;
 	public int   l_dmg;
-	public float l_spread;
+	public float l_spread;*/
 
 	[SerializeField]private int m_health;
 	[SerializeField]private P_TYPE m_type;
@@ -75,15 +81,19 @@ public class Player_Stats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		scoreBoard = GameObject.Find ("Text").GetComponent<Text>();
-		healthBoard = GameObject.Find ("Health").GetComponent<Text>();
+		if(!isShopMode){
+			scoreBoard = GameObject.Find ("Text").GetComponent<Text>();
+			healthBoard = GameObject.Find ("Health").GetComponent<Text>();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		scoreBoard.text = string.Concat ("Score: ", score);
-		healthBoard.text = string.Concat ("Health: ", m_health);
-		roundBoard.text = string.Concat ("Round: ", round);
+		if(!isShopMode){
+			scoreBoard.text = string.Concat ("Score: ", score);
+			healthBoard.text = string.Concat ("Health: ", m_health);
+			roundBoard.text = string.Concat ("Round: ", round);
+		}
 	}
 		
 }
