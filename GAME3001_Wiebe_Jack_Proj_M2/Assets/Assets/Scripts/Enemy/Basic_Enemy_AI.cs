@@ -13,12 +13,15 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	protected Quaternion m_destRot;
 	protected Vector3 m_targetVec;
 	protected Vector3 m_destVec;
+	[SerializeField]
 	protected bool m_hasTarget;
 	protected float m_magnitude;
 
 	public Spawner spawner;
 
 	bool isDead = false; //this is to prevent adding score multiple times
+
+	public Rigidbody2D rbRef;
 
 	public GameObject newProj;
 	[SerializeField]protected int m_poolNum;
@@ -32,6 +35,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	virtual protected void Start () {
 		m_targetVec = target.transform.position;
 		m_hasTarget = true;
+		rbRef = this.GetComponent<Rigidbody2D> ();
 
 		for (int i = 0; i < m_poolNum; i++) {
 			GameObject obj = (GameObject)Instantiate (newProj);
@@ -65,8 +69,13 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		if(m_hasTarget)
 			this.transform.Translate (Vector3.up * (m_moveSpeed * Time.deltaTime));
 
+		m_destVec = m_targetVec - this.transform.position;
+		m_magnitude = m_destVec.magnitude;
+
 		if (m_magnitude <= m_stopDist) {
 			m_hasTarget = false;
+		} else {
+			m_hasTarget = true;
 		}
 	}
 

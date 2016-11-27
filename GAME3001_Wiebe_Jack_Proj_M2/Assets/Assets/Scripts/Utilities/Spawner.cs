@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour {
 
 	public void StartRound()
 	{
-		Debug.Break ();
+		//Debug.Break ();
 		spawnPoints = GameObject.FindGameObjectsWithTag ("SpawnPoint");
 		GameObject temp;
 		_curRround = Player_Stats.instance.round;
@@ -101,7 +101,7 @@ public class Spawner : MonoBehaviour {
 
 	public void LoadNextRound()
 	{
-		Player_Stats.instance.isShopMode = true;
+		//Player_Stats.instance.isShopMode = true;
 		SceneManager.LoadScene ("Shop");
 	}
 }

@@ -6,13 +6,10 @@ public class Player_Stats : MonoBehaviour {
 
 	public static Player_Stats instance = null;     
 
-	public bool isShopMode = false;
+	//public bool isShopMode = false;
 
 	public int round;
 	public int score;
-	public Text scoreBoard;
-	public Text healthBoard;
-	public Text roundBoard;
 
 	public int bullet_level = 0;
 	public int lazer_level = 0;
@@ -57,8 +54,13 @@ public class Player_Stats : MonoBehaviour {
 		//Sets this to not be destroyed when reloading scene
 		DontDestroyOnLoad (gameObject);
 		InitGame ();
+
 	}
 
+	public int Get_Health()
+	{
+		return m_health;
+	}
 
 	private void InitGame()
 	{
@@ -73,27 +75,25 @@ public class Player_Stats : MonoBehaviour {
 		return;
 	}
 
+	public void Set_Type(P_TYPE type)
+	{
+		m_type = type;
+	}
+	public P_TYPE Get_Type()
+	{
+		return m_type;
+	}
+
 	public void EndGame()
 	{
 		//destroy player
 		//display ending game message 
 	}
-
-	// Use this for initialization
-	void Start () {
-		if(!isShopMode){
-			scoreBoard = GameObject.Find ("Text").GetComponent<Text>();
-			healthBoard = GameObject.Find ("Health").GetComponent<Text>();
-		}
-	}
+		
 	
 	// Update is called once per frame
 	void Update () {
-		if(!isShopMode){
-			scoreBoard.text = string.Concat ("Score: ", score);
-			healthBoard.text = string.Concat ("Health: ", m_health);
-			roundBoard.text = string.Concat ("Round: ", round);
-		}
+		
 	}
 		
 }

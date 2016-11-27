@@ -28,6 +28,7 @@ public class Player_Shooting_System : MonoBehaviour {
 			Projectiles.Add (pro);
 			Bullets.Add (obj);
 		}
+		Change_P_Type (Player_Stats.instance.Get_Type());
 	}
 
 	public void ShootOn()

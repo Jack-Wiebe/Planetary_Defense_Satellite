@@ -9,12 +9,15 @@ public class Shop_Manager : MonoBehaviour {
 	public GameObject[] Lazers;
 	public GameObject[] Missiles;
 
+	public Text Money;
+
+	public Toggle[] toggles;
+
 	// Use this for initialization
 	void Start () {
 		//Bullets = GameObject.FindGameObjectsWithTag ("Bullet");
 		//Lazers = GameObject.FindGameObjectsWithTag ("Lazer");
 		//Missiles = GameObject.FindGameObjectsWithTag ("Missile");
-
 		SetBulletUI ();
 		SetLazerUI ();
 		SetMissileUI ();
@@ -22,6 +25,11 @@ public class Shop_Manager : MonoBehaviour {
 
 	public void Purchas_Lazer(int value)
 	{
+		if (Player_Stats.instance.score < 10)
+			return;
+		else
+			Player_Stats.instance.score -= 10 * value;
+
 		Player_Stats.instance.lazer_level += value;
 		if (Player_Stats.instance.lazer_level > 8) {
 			Player_Stats.instance.lazer_level = 8;
@@ -50,6 +58,11 @@ public class Shop_Manager : MonoBehaviour {
 
 	public void Purchas_Bullet(int value)
 	{
+		if (Player_Stats.instance.score < 10)
+			return;
+		else
+			Player_Stats.instance.score -= 10 * value;
+
 		Player_Stats.instance.bullet_level += value;
 		if (Player_Stats.instance.bullet_level > 8) {
 			Player_Stats.instance.bullet_level = 8;
@@ -78,6 +91,11 @@ public class Shop_Manager : MonoBehaviour {
 
 	public void Purchas_Missile(int value)
 	{
+		if (Player_Stats.instance.score < 10)
+			return;
+		else
+			Player_Stats.instance.score -= 10 * value;
+		
 		Player_Stats.instance.missile_level += value;
 		if (Player_Stats.instance.missile_level > 8) {
 			Player_Stats.instance.missile_level = 8;
@@ -88,9 +106,19 @@ public class Shop_Manager : MonoBehaviour {
 			return;
 		}
 
+
 		SetMissileUI ();
 
 
+	}
+
+	public void SetCurrentWeapon(int type)
+	{
+		Player_Stats.instance.Set_Type ((P_TYPE)type);
+		/*for (int i = 0; i < 3; i++) {
+			toggles [i].isOn = false;
+		}
+		toggles [type].isOn = true;*/
 	}
 
 	public void SetMissileUI()
@@ -113,6 +141,6 @@ public class Shop_Manager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+		Money.text = string.Concat ("Money: ", Player_Stats.instance.score);
 	}
 }
