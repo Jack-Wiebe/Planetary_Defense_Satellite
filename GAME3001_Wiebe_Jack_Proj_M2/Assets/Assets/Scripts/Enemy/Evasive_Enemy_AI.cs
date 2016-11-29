@@ -67,7 +67,7 @@ public class Evasive_Enemy_AI : Basic_Enemy_AI {
 		m_retreatVector = this.transform.position - target.transform.position;
 		m_magnitude = m_retreatVector.magnitude;
 		if (m_magnitude < m_stopDist) {
-			Debug.Log ("back it up");
+			//Debug.Log ("back it up");
 			//m_retreatVector = this.transform.position - target.transform.position;
 
 			//this.transform.Translate (m_retreatVector * (m_retreatSpeed * Time.deltaTime));
@@ -85,13 +85,13 @@ public class Evasive_Enemy_AI : Basic_Enemy_AI {
 			if (hit.collider != null) {
 				if (hit.collider.gameObject.CompareTag ("Projectile")) {
 					m_evadeVector = hit.transform.position - this.transform.position;
-					Debug.Log (m_evadeVector);
+					//Debug.Log (m_evadeVector);
 
 					m_evadeVector = Vector3.Cross (Vector3.forward, m_evadeVector);
 					//Vector2.
 
 					Vector2 localEnemySpace = this.transform.InverseTransformPoint (hit.point);
-					Debug.Log(localEnemySpace);
+					//Debug.Log(localEnemySpace);
 					//Debug.Log(this.transform.localPosition.x);
 					//float test = (hit.transform.position - this.transform.position).sqrMagnitude;
 					//Debug.Log (test);

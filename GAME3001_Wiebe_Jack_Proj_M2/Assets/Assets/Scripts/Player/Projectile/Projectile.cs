@@ -76,7 +76,14 @@ abstract public class Projectile : MonoBehaviour {
 		if (target.CompareTag("Enemy")) {
 			Bullet_Hit (m_player, target.gameObject, m_dmg);
 		}
-
+		if (target.CompareTag("EnemyProjectile") && m_type == P_TYPE.BULLET) {
+			target.gameObject.SetActive (false);
+			//this.gameObject.SetActive (false);
+		}
+		else if (target.CompareTag("EnemyProjectile") ) {
+			target.gameObject.SetActive (false);
+			this.gameObject.SetActive (false);
+		}
 	}
 		
 

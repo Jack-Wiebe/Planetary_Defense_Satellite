@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -6,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class Spawner : MonoBehaviour {
 
 	[SerializeField]
-	public const float basic_enemy_multiplier = 5.0f;
+	public const float basic_enemy_multiplier = 3.0f;
 	[SerializeField]
-	public const float boss_enemy_multiplier = 0.5f;
+	public const float boss_enemy_multiplier = 1.0f;
 	[SerializeField]
 	public const float evasive_enemy_multiplier = 2.0f;
 
@@ -17,6 +18,8 @@ public class Spawner : MonoBehaviour {
 	public int evasive_enemy_count;
 
 	public int spawn_delay;
+	public int startingCount;
+	public Text count;
 
 	public GameObject Basic_Enemy;
 	public GameObject Boss_Enemy;
@@ -39,10 +42,10 @@ public class Spawner : MonoBehaviour {
 			basic_enemy_count = _curRround;
 		if (_curRround % 3 == 0)
 			evasive_enemy_count = _curRround;
-		if (_curRround % 10 == 0)
+		if (_curRround % 4 == 0)
 			boss_enemy_count = _curRround;
 
-		Debug.Log (basic_enemy_count);
+		//Debug.Log (basic_enemy_count);
 
 		for (int i = 0; i <= _curRround; i++) {
 			for (int j = 0; j < (int)(basic_enemy_count * basic_enemy_multiplier); j++) {
@@ -65,6 +68,7 @@ public class Spawner : MonoBehaviour {
 			}
 		}
 
+		startingCount = spawnPool.Count;
 		StartCoroutine (Spawning ());
 
 	}
@@ -95,6 +99,7 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Debug.Log (spawnPool.Count);
+		count.text = string.Concat(spawnPool.Count, "/", startingCount);
 		if (spawnPool.Count <= 0)
 			LoadNextRound ();
 	}

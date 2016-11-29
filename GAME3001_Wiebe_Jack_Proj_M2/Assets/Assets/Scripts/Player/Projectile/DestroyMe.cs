@@ -17,7 +17,7 @@ public class DestroyMe : MonoBehaviour {
 	protected virtual IEnumerator DestroyProj()
 	{
 		yield return new WaitForSeconds (m_bulletLife);
-
+		
 		this.gameObject.SetActive (false);
 
 	}
