@@ -138,6 +138,27 @@ abstract public class Projectile : MonoBehaviour {
 		}
 	}
 
+	public virtual void Set_Stats(P_TYPE type)
+	{
+		switch (type) {
+		case P_TYPE.BULLET:
+			m_bulletSpeed = Player_Stats.instance.b_speed;
+			m_dmg = Player_Stats.instance.b_dmg;
+			m_spread = Player_Stats.instance.b_spread;
+			break;
+		case P_TYPE.LAZER:
+			m_bulletSpeed = Player_Stats.instance.l_speed;
+			m_dmg = Player_Stats.instance.l_dmg;
+			m_spread = Player_Stats.instance.l_spread;
+			break;
+		case P_TYPE.MISSILE:
+			m_bulletSpeed = Player_Stats.instance.m_speed;
+			m_dmg = Player_Stats.instance.m_dmg;
+			m_spread = Player_Stats.instance.m_spread;
+			break;
+		}
+	}
+
 	public virtual void Bullet_Hit (GameObject instigator, GameObject target, float dmg)
 	{
 		if (instigator == null) {

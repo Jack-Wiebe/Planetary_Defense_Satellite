@@ -12,13 +12,15 @@ public class Player_Shooting_System : MonoBehaviour {
 	[SerializeField] private int m_bulletPoolNum = 100;
 	[SerializeField] private List<GameObject> Bullets;
 	[SerializeField] private List<Projectile> Projectiles;
+	[SerializeField] private float cur_spread;
 	[SerializeField] private P_TYPE m_type;
+
+	private int projectilesPerFire = 0;
 
 	private IEnumerator m_coroutine;
 	// Use this for initialization
 	void Start () {
 		m_coroutine = Firing ();
-
 		//create object pool
 		Bullets = new List<GameObject> ();
 		for (int i = 0; i < m_bulletPoolNum; i++) {
@@ -29,6 +31,8 @@ public class Player_Shooting_System : MonoBehaviour {
 			Bullets.Add (obj);
 		}
 		Change_P_Type (Player_Stats.instance.Get_Type());
+		Set_Stats ();
+		//Change_P_Type (Player_Stats.instance);
 	}
 
 	public void ShootOn()
@@ -74,12 +78,33 @@ public class Player_Shooting_System : MonoBehaviour {
 		for (int i = 0; i < m_bulletPoolNum; i++) {
 			Projectiles [i] = Projectiles [i].Change_Type (type);
 		}
+		switch (type)
+		{
+		case(P_TYPE.BULLET):
+			cur_spread = Player_Stats.instance.b_spread;
+			break;
+		case(P_TYPE.LAZER):
+			cur_spread = Player_Stats.instance.l_spread;
+			break;
+		case(P_TYPE.MISSILE):
+			cur_spread = Player_Stats.instance.m_spread;
+			break;
+		}
 	}
 
 	public P_TYPE Get_P_Type()
 	{
 		return m_type;
 	}
+
+
+	public void Set_Stats()
+	{
+		for (int i = 0; i < m_bulletPoolNum; i++) {
+			Projectiles [i].Set_Stats (m_type);
+		}
+	}
+
 	public IEnumerator Firing()
 	{
 
@@ -90,9 +115,10 @@ public class Player_Shooting_System : MonoBehaviour {
 			yield return new WaitForSeconds (m_fireDelay);
 
 			for (int i = 0; i < Bullets.Count; i++) {
+				//for (int spread = 0; spread < cur_spread; spread++) {
 
-				if (!Bullets [i].activeInHierarchy) {
-
+					if (!Bullets [i].activeInHierarchy) {
+					
 					Bullets [i].transform.position = m_barrel.position;
 
 					Quaternion ang = Quaternion.Euler (0.0f, 0.0f, this.transform.rotation.eulerAngles.z);
@@ -101,8 +127,14 @@ public class Player_Shooting_System : MonoBehaviour {
 					Bullets [i].SetActive (true);
 
 					//i = Bullets.Count;
-					break;
 
+
+					//}
+					projectilesPerFire++;
+					if (projectilesPerFire >= cur_spread) {
+						projectilesPerFire = 0;
+						break;
+					}
 				}
 			}
 

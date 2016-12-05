@@ -10,6 +10,11 @@ public class EnemyProjectile : Projectile {
 			Bullet_Hit (m_player, target.gameObject, m_dmg);
 		}
 
+		//Debug.Log (target);
+		if (target.CompareTag("Shield")) {
+			this.gameObject.SetActive (false);
+		}
+
 	}
 
 	public override void Bullet_Hit (GameObject instigator, GameObject target, float dmg)

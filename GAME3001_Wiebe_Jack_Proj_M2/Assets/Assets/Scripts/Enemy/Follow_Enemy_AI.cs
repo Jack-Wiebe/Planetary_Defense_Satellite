@@ -66,7 +66,7 @@ public class Follow_Enemy_AI : Basic_Enemy_AI {
 			m_hasTarget = true;
 		}
 
-		if(Leader != null)
+		if(Leader != null && OtherFollower != null)
 		{
 			if(Vector3.Distance(this.transform.position, OtherFollower.transform.position) < followDistance )
 			{

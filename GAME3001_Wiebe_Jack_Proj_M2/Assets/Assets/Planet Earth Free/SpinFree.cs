@@ -4,7 +4,12 @@ using System.Collections;
 /// <summary>
 /// Spin the object at a specified speed
 /// </summary>
-public class SpinFree : MonoBehaviour {
+public class SpinFree : MonoBehaviour 
+{
+
+	public GameObject EarthModel;
+
+
 	[Tooltip("Spin: Yes or No")]
 	public bool spin;
 	[Tooltip("Spin the parent object instead of the object this script is attached to")]
@@ -20,6 +25,11 @@ public class SpinFree : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if (Player_Stats.instance.isGameMode) {
+			EarthModel.SetActive (true);
+		} else {
+			EarthModel.SetActive (false);
+		}
 		if (direction < 1f) {
 			direction += Time.deltaTime / (directionChangeSpeed / 2);
 		}

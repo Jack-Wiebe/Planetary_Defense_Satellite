@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour {
 	public int boss_enemy_count;
 	public int evasive_enemy_count;
 
-	public int spawn_delay;
+	public float spawn_delay;
 	public int startingCount;
 	public Text count;
 
@@ -32,12 +32,23 @@ public class Spawner : MonoBehaviour {
 	[SerializeField]
 	private int _curRround;
 
+	private float Map()
+	{
+		//spawn_delay, 8, 0, 8,2.5)
+		return 8.0f + (spawn_delay - 8.0f)*(2.5f-8.0f)/(0.0f-8.0f);
+	}
+
 	public void StartRound()
 	{
 		//Debug.Break ();
+
 		spawnPoints = GameObject.FindGameObjectsWithTag ("SpawnPoint");
 		GameObject temp;
 		_curRround = Player_Stats.instance.round;
+		spawn_delay-= _curRround;
+		if (spawn_delay < 2)
+			spawn_delay = 2;
+
 		if (_curRround % 2 == 0)
 			basic_enemy_count = _curRround;
 		if (_curRround % 3 == 0)
@@ -107,6 +118,7 @@ public class Spawner : MonoBehaviour {
 	public void LoadNextRound()
 	{
 		//Player_Stats.instance.isShopMode = true;
+		Player_Stats.instance.isGameMode = false;
 		SceneManager.LoadScene ("Shop");
 	}
 }
