@@ -14,7 +14,8 @@ public class Leader_Enemy_AI : Basic_Enemy_AI {
 
 	protected override void Update ()
 	{
-
+		
+		DisplayDamage ();
 		LookAt ();
 		BasicMove ();
 		FireWeapon ();
@@ -27,7 +28,7 @@ public class Leader_Enemy_AI : Basic_Enemy_AI {
 		missileCount++;
 		if (missileCount >= missileTime) {
 			
-			Instantiate (Missile, this.transform.position, Quaternion.LookRotation(-this.transform.forward));
+			Instantiate (Missile, this.transform.position, Quaternion.LookRotation(-this.transform.forward,-this.transform.up));
 			missileCount = 0;
 		}
 	}

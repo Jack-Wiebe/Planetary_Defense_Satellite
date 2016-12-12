@@ -21,6 +21,7 @@ public class Follow_Enemy_AI : Basic_Enemy_AI {
 
 	override protected void Update()
 	{
+		DisplayDamage ();
 		LookAt ();
 		Follow ();
 		Retreat ();
@@ -31,10 +32,21 @@ public class Follow_Enemy_AI : Basic_Enemy_AI {
 	{
 		//spawner.spawnPool.Remove (this.gameObject);
 
-		//drop item
-		//
-		//spawn explosion[ojectpool]
-		//
+		Spawner tempSpwan = GameObject.Find ("GameManager").GetComponent<Spawner> ();
+		bool spawning = false;
+		while(!spawning)
+		{
+			int index = Random.Range (0, tempSpwan.explosionPool.Count);
+			if (!tempSpwan.explosionPool [index].activeInHierarchy) {
+				tempSpwan.explosionPool [index].transform.position = this.transform.position;
+				tempSpwan.explosionPool [index].transform.rotation = Quaternion.Euler (0.0f, 0.0f, this.transform.rotation.eulerAngles.z);
+				tempSpwan.explosionPool [index].SetActive (true);
+				spawning = true;
+				break;
+			} else {
+				spawning = false;
+			}
+		}
 
 		Player_Stats.instance.score += 10;
 		Destroy(this.gameObject);

@@ -26,7 +26,8 @@ public class Evasive_Enemy_AI : Basic_Enemy_AI {
 
 	protected override void Update ()
 	{
-
+		
+		DisplayDamage ();
 		LookAt ();
 		EvasiveMove ();
 		Retreat ();

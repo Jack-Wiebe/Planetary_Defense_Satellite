@@ -56,14 +56,17 @@ public class Shop_Manager : MonoBehaviour {
 			Player_Stats.instance.lazer_level = 8;
 			return;
 		}
-		if (Player_Stats.instance.lazer_level < 0) {
+		if (Player_Stats.instance.lazer_level <= 0) {
 			//Player_Stats.instance.score -= 200 * value;
 			if(value < 0)
 				Player_Stats.instance.score -= 200;
-			Player_Stats.instance.lazer_level = 0;
+			Player_Stats.instance.lazer_level = 1;
 			return;
 		}
-			
+
+		bulletTog.isOn = false;
+		missileTog.isOn = false;
+		lazerTog.isOn = true;
 		SetLazerUI ();
 
 	}
@@ -106,18 +109,20 @@ public class Shop_Manager : MonoBehaviour {
 			Player_Stats.instance.bullet_level = 8;
 			return;
 		}
-		if (Player_Stats.instance.bullet_level < 0) {
+		if (Player_Stats.instance.bullet_level <= 0) {
 			//Player_Stats.instance.score -= 200 * value;
 			if(value < 0)
 				Player_Stats.instance.score -= 200;
-			Player_Stats.instance.bullet_level = 0;
+			Player_Stats.instance.bullet_level = 1;
 			return;
 		}
 
 			
 		//else if(Player_Stats.instance.score > 0)
 		//	Player_Stats.instance.score -= 200 * value;
-
+		bulletTog.isOn = true;
+		missileTog.isOn = false;
+		lazerTog.isOn = false;
 		SetBulletUI ();
 
 	}
@@ -154,15 +159,17 @@ public class Shop_Manager : MonoBehaviour {
 			Player_Stats.instance.missile_level = 8;
 			return;
 		}
-		if (Player_Stats.instance.missile_level < 0) {
+		if (Player_Stats.instance.missile_level <= 0) {
 			//Player_Stats.instance.score -= 200 * value;
 			if(value < 0)
 				Player_Stats.instance.score -= 200;
-			Player_Stats.instance.missile_level = 0;
+			Player_Stats.instance.missile_level = 1;
 			return;
 		}
 
-
+		bulletTog.isOn = false;
+		missileTog.isOn = true;
+		lazerTog.isOn = false;
 		SetMissileUI ();
 
 

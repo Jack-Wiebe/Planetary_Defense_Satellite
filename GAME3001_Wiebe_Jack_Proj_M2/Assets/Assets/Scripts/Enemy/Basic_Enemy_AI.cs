@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Basic_Enemy_AI : MonoBehaviour {
 
+	protected float MAXHEALTH;
 	[SerializeField]protected float m_enemyHealth = 100.0f;
 
 	public GameObject target;
@@ -19,7 +20,7 @@ public class Basic_Enemy_AI : MonoBehaviour {
 
 	public Spawner spawner;
 
-	bool isDead = false; //this is to prevent adding score multiple times
+	protected bool isDead = false; //this is to prevent adding score multiple times
 
 	public Rigidbody2D rbRef;
 
@@ -31,8 +32,14 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	protected float m_count = 0.0f;
 	[SerializeField]protected float m_fireRate;
 
+	protected SpriteRenderer m_spirte;
+	protected float m_colorValue;
+
 	// Use this for initialization
 	virtual protected void Start () {
+
+		MAXHEALTH = m_enemyHealth;
+		m_spirte = this.gameObject.GetComponent<SpriteRenderer> ();
 		m_targetVec = target.transform.position;
 		m_hasTarget = true;
 		rbRef = this.GetComponent<Rigidbody2D> ();
@@ -50,10 +57,17 @@ public class Basic_Enemy_AI : MonoBehaviour {
 	// Update is called once per frame
 	virtual protected void Update () {
 
+		DisplayDamage ();
 		LookAt ();
 		BasicMove ();
 		FireWeapon ();
 			
+	}
+
+	virtual protected void DisplayDamage()
+	{
+		m_colorValue = Mathf.Lerp (0, 1, m_enemyHealth / MAXHEALTH);
+		m_spirte.material.color = new Color(1.0f, m_colorValue, m_colorValue, 1.0f);
 	}
 
 	virtual protected void LookAt()
@@ -112,10 +126,21 @@ public class Basic_Enemy_AI : MonoBehaviour {
 		spawner.spawnPool.Remove (this.gameObject);
 
 		//drop item
-		//
-		//spawn explosion[ojectpool]
-		//
+		bool spawning = false;
 
+		while(!spawning)
+		{
+			int index = Random.Range (0, spawner.explosionPool.Count);
+			if (!spawner.explosionPool [index].activeInHierarchy) {
+				spawner.explosionPool [index].transform.position = this.transform.position;
+				spawner.explosionPool [index].transform.rotation = Quaternion.Euler (0.0f, 0.0f, this.transform.rotation.eulerAngles.z);
+				spawner.explosionPool [index].SetActive (true);
+				spawning = true;
+				break;
+			} else {
+				spawning = false;
+			}
+		}
 		Player_Stats.instance.score += 10;
 		Destroy(this.gameObject);
 	}

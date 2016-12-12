@@ -59,7 +59,7 @@ public class Missile : Projectile {
 		if (m_target != null) {
 			m_destVec = m_targetVec - this.transform.position;
 			m_destRot = Quaternion.LookRotation (this.transform.forward, m_destVec);
-			this.transform.rotation = Quaternion.RotateTowards (this.transform.rotation, m_destRot, m_rotSpeed);
+			this.transform.rotation = Quaternion.RotateTowards (this.transform.rotation, m_destRot, m_rotSpeed * Player_Stats.instance.missile_level);
 		}
 	}
 		

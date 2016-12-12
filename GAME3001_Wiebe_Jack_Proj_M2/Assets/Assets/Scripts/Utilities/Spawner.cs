@@ -28,6 +28,10 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] spawnPoints;
 
 	public List<GameObject> spawnPool;
+	public List<GameObject> explosionPool;
+	public int EXPLOSION_POOL_SIZE;
+	public GameObject[] explosionTypes;
+
 
 	[SerializeField]
 	private int _curRround;
@@ -41,6 +45,14 @@ public class Spawner : MonoBehaviour {
 	public void StartRound()
 	{
 		//Debug.Break ();
+		for(int i = 0;i < EXPLOSION_POOL_SIZE; i++)
+		{
+			
+			GameObject exp = Instantiate(explosionTypes[Random.Range (0, explosionTypes.Length)]) as GameObject;
+			exp.SetActive (false);
+			explosionPool.Add (exp);
+
+		}
 
 		spawnPoints = GameObject.FindGameObjectsWithTag ("SpawnPoint");
 		GameObject temp;
